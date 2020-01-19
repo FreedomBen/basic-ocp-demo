@@ -6,11 +6,15 @@ set :port, 43215
 set :bind, '0.0.0.0'
 
 get '/' do
-  'ok'
+  'You requested my root path!  Nice work!'
 end
 
 get '/healthz' do
-  'ok'
+  'I am quite healthy'
+end
+
+get '/freedomben' do
+  'https://github.com/FreedomBen'
 end
 
 post '/hit' do
