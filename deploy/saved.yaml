@@ -1,0 +1,1048 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/networks-status: ""
+      openshift.io/build.name: basic-ocp-demo-1
+      openshift.io/scc: privileged
+    creationTimestamp: "2020-10-05T19:23:14Z"
+    labels:
+      openshift.io/build.name: basic-ocp-demo-1
+    name: basic-ocp-demo-1-build
+    namespace: basic-ocp-demo-development
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: Build
+      name: basic-ocp-demo-1
+      uid: 8e1d2477-6c3a-418f-9c21-0f5507ae64aa
+    resourceVersion: "487776"
+    selfLink: /api/v1/namespaces/basic-ocp-demo-development/pods/basic-ocp-demo-1-build
+    uid: 856b64ae-22e8-42f6-a266-da501d1072ea
+  spec:
+    activeDeadlineSeconds: 604800
+    containers:
+    - args:
+      - --loglevel=0
+      command:
+      - openshift-docker-build
+      env:
+      - name: BUILD
+        value: |
+          {"kind":"Build","apiVersion":"build.openshift.io/v1","metadata":{"name":"basic-ocp-demo-1","namespace":"basic-ocp-demo-development","selfLink":"/apis/build.openshift.io/v1/namespaces/basic-ocp-demo-development/builds/basic-ocp-demo-1","uid":"8e1d2477-6c3a-418f-9c21-0f5507ae64aa","resourceVersion":"487437","creationTimestamp":"2020-10-05T19:23:13Z","labels":{"app":"basic-ocp-demo","app.kubernetes.io/component":"basic-ocp-demo","app.kubernetes.io/instance":"basic-ocp-demo","buildconfig":"basic-ocp-demo","openshift.io/build-config.name":"basic-ocp-demo","openshift.io/build.start-policy":"Serial"},"annotations":{"openshift.io/build-config.name":"basic-ocp-demo","openshift.io/build.number":"1"},"ownerReferences":[{"apiVersion":"build.openshift.io/v1","kind":"BuildConfig","name":"basic-ocp-demo","uid":"8ddf2654-e548-4d1a-818a-baeb6b3df7e4","controller":true}]},"spec":{"serviceAccount":"builder","source":{"type":"Git","git":{"uri":"https://github.com/FreedomBen/basic-ocp-demo","ref":"development"}},"strategy":{"type":"Docker","dockerStrategy":{"from":{"kind":"DockerImage","name":"registry.access.redhat.com/ubi8/ruby-25@sha256:255fdb695fa5638a02d504ca04bd21d9c1636592380e857fb0d5010fad31f22e"},"pullSecret":{"name":"builder-dockercfg-2rskq"}}},"output":{"to":{"kind":"DockerImage","name":"image-registry.openshift-image-registry.svc:5000/basic-ocp-demo-development/basic-ocp-demo:latest"},"pushSecret":{"name":"builder-dockercfg-2rskq"}},"resources":{},"postCommit":{},"nodeSelector":null,"triggeredBy":[{"message":"Build configuration change"}]},"status":{"phase":"New","outputDockerImageReference":"image-registry.openshift-image-registry.svc:5000/basic-ocp-demo-development/basic-ocp-demo:latest","config":{"kind":"BuildConfig","namespace":"basic-ocp-demo-development","name":"basic-ocp-demo"},"output":{},"conditions":[{"type":"New","status":"True","lastUpdateTime":"2020-10-05T19:23:13Z","lastTransitionTime":"2020-10-05T19:23:13Z"}]}}
+      - name: LANG
+        value: en_US.utf8
+      - name: SOURCE_REPOSITORY
+        value: https://github.com/FreedomBen/basic-ocp-demo
+      - name: SOURCE_URI
+        value: https://github.com/FreedomBen/basic-ocp-demo
+      - name: SOURCE_REF
+        value: development
+      - name: PUSH_DOCKERCFG_PATH
+        value: /var/run/secrets/openshift.io/push
+      - name: PULL_DOCKERCFG_PATH
+        value: /var/run/secrets/openshift.io/pull
+      - name: BUILD_REGISTRIES_CONF_PATH
+        value: /var/run/configs/openshift.io/build-system/registries.conf
+      - name: BUILD_REGISTRIES_DIR_PATH
+        value: /var/run/configs/openshift.io/build-system/registries.d
+      - name: BUILD_SIGNATURE_POLICY_PATH
+        value: /var/run/configs/openshift.io/build-system/policy.json
+      - name: BUILD_STORAGE_CONF_PATH
+        value: /var/run/configs/openshift.io/build-system/storage.conf
+      - name: BUILD_STORAGE_DRIVER
+        value: overlay
+      - name: BUILD_ISOLATION
+        value: chroot
+      - name: BUILD_BLOBCACHE_DIR
+        value: /var/cache/blobs
+      - name: HTTP_PROXY
+      - name: HTTPS_PROXY
+      - name: NO_PROXY
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:07387e0f829d78f4d4bb20022a7ffacac10f8e3bc50b78ec3ced904dfd01dae4
+      imagePullPolicy: IfNotPresent
+      name: docker-build
+      resources: {}
+      securityContext:
+        privileged: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: FallbackToLogsOnError
+      volumeMounts:
+      - mountPath: /tmp/build
+        name: buildworkdir
+      - mountPath: /var/lib/containers/cache
+        name: buildcachedir
+      - mountPath: /var/run/secrets/openshift.io/push
+        name: builder-dockercfg-2rskq-push
+        readOnly: true
+      - mountPath: /var/run/secrets/openshift.io/pull
+        name: builder-dockercfg-2rskq-pull
+        readOnly: true
+      - mountPath: /var/run/configs/openshift.io/build-system
+        name: build-system-configs
+        readOnly: true
+      - mountPath: /var/run/configs/openshift.io/certs
+        name: build-ca-bundles
+      - mountPath: /etc/pki/ca-trust/extracted/pem
+        name: build-proxy-ca-bundles
+      - mountPath: /var/lib/containers/storage
+        name: container-storage-root
+      - mountPath: /var/cache/blobs
+        name: build-blob-cache
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: builder-token-7f87t
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: builder-dockercfg-2rskq
+    initContainers:
+    - args:
+      - --loglevel=0
+      command:
+      - openshift-git-clone
+      env:
+      - name: BUILD
+        value: |
+          {"kind":"Build","apiVersion":"build.openshift.io/v1","metadata":{"name":"basic-ocp-demo-1","namespace":"basic-ocp-demo-development","selfLink":"/apis/build.openshift.io/v1/namespaces/basic-ocp-demo-development/builds/basic-ocp-demo-1","uid":"8e1d2477-6c3a-418f-9c21-0f5507ae64aa","resourceVersion":"487437","creationTimestamp":"2020-10-05T19:23:13Z","labels":{"app":"basic-ocp-demo","app.kubernetes.io/component":"basic-ocp-demo","app.kubernetes.io/instance":"basic-ocp-demo","buildconfig":"basic-ocp-demo","openshift.io/build-config.name":"basic-ocp-demo","openshift.io/build.start-policy":"Serial"},"annotations":{"openshift.io/build-config.name":"basic-ocp-demo","openshift.io/build.number":"1"},"ownerReferences":[{"apiVersion":"build.openshift.io/v1","kind":"BuildConfig","name":"basic-ocp-demo","uid":"8ddf2654-e548-4d1a-818a-baeb6b3df7e4","controller":true}]},"spec":{"serviceAccount":"builder","source":{"type":"Git","git":{"uri":"https://github.com/FreedomBen/basic-ocp-demo","ref":"development"}},"strategy":{"type":"Docker","dockerStrategy":{"from":{"kind":"DockerImage","name":"registry.access.redhat.com/ubi8/ruby-25@sha256:255fdb695fa5638a02d504ca04bd21d9c1636592380e857fb0d5010fad31f22e"},"pullSecret":{"name":"builder-dockercfg-2rskq"}}},"output":{"to":{"kind":"DockerImage","name":"image-registry.openshift-image-registry.svc:5000/basic-ocp-demo-development/basic-ocp-demo:latest"},"pushSecret":{"name":"builder-dockercfg-2rskq"}},"resources":{},"postCommit":{},"nodeSelector":null,"triggeredBy":[{"message":"Build configuration change"}]},"status":{"phase":"New","outputDockerImageReference":"image-registry.openshift-image-registry.svc:5000/basic-ocp-demo-development/basic-ocp-demo:latest","config":{"kind":"BuildConfig","namespace":"basic-ocp-demo-development","name":"basic-ocp-demo"},"output":{},"conditions":[{"type":"New","status":"True","lastUpdateTime":"2020-10-05T19:23:13Z","lastTransitionTime":"2020-10-05T19:23:13Z"}]}}
+      - name: LANG
+        value: en_US.utf8
+      - name: SOURCE_REPOSITORY
+        value: https://github.com/FreedomBen/basic-ocp-demo
+      - name: SOURCE_URI
+        value: https://github.com/FreedomBen/basic-ocp-demo
+      - name: SOURCE_REF
+        value: development
+      - name: BUILD_REGISTRIES_CONF_PATH
+        value: /var/run/configs/openshift.io/build-system/registries.conf
+      - name: BUILD_REGISTRIES_DIR_PATH
+        value: /var/run/configs/openshift.io/build-system/registries.d
+      - name: BUILD_SIGNATURE_POLICY_PATH
+        value: /var/run/configs/openshift.io/build-system/policy.json
+      - name: BUILD_STORAGE_CONF_PATH
+        value: /var/run/configs/openshift.io/build-system/storage.conf
+      - name: BUILD_BLOBCACHE_DIR
+        value: /var/cache/blobs
+      - name: HTTP_PROXY
+      - name: HTTPS_PROXY
+      - name: NO_PROXY
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:07387e0f829d78f4d4bb20022a7ffacac10f8e3bc50b78ec3ced904dfd01dae4
+      imagePullPolicy: IfNotPresent
+      name: git-clone
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: FallbackToLogsOnError
+      volumeMounts:
+      - mountPath: /tmp/build
+        name: buildworkdir
+      - mountPath: /var/run/configs/openshift.io/build-system
+        name: build-system-configs
+        readOnly: true
+      - mountPath: /var/run/configs/openshift.io/certs
+        name: build-ca-bundles
+      - mountPath: /etc/pki/ca-trust/extracted/pem
+        name: build-proxy-ca-bundles
+      - mountPath: /var/cache/blobs
+        name: build-blob-cache
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: builder-token-7f87t
+        readOnly: true
+    - args:
+      - --loglevel=0
+      command:
+      - openshift-manage-dockerfile
+      env:
+      - name: BUILD
+        value: |
+          {"kind":"Build","apiVersion":"build.openshift.io/v1","metadata":{"name":"basic-ocp-demo-1","namespace":"basic-ocp-demo-development","selfLink":"/apis/build.openshift.io/v1/namespaces/basic-ocp-demo-development/builds/basic-ocp-demo-1","uid":"8e1d2477-6c3a-418f-9c21-0f5507ae64aa","resourceVersion":"487437","creationTimestamp":"2020-10-05T19:23:13Z","labels":{"app":"basic-ocp-demo","app.kubernetes.io/component":"basic-ocp-demo","app.kubernetes.io/instance":"basic-ocp-demo","buildconfig":"basic-ocp-demo","openshift.io/build-config.name":"basic-ocp-demo","openshift.io/build.start-policy":"Serial"},"annotations":{"openshift.io/build-config.name":"basic-ocp-demo","openshift.io/build.number":"1"},"ownerReferences":[{"apiVersion":"build.openshift.io/v1","kind":"BuildConfig","name":"basic-ocp-demo","uid":"8ddf2654-e548-4d1a-818a-baeb6b3df7e4","controller":true}]},"spec":{"serviceAccount":"builder","source":{"type":"Git","git":{"uri":"https://github.com/FreedomBen/basic-ocp-demo","ref":"development"}},"strategy":{"type":"Docker","dockerStrategy":{"from":{"kind":"DockerImage","name":"registry.access.redhat.com/ubi8/ruby-25@sha256:255fdb695fa5638a02d504ca04bd21d9c1636592380e857fb0d5010fad31f22e"},"pullSecret":{"name":"builder-dockercfg-2rskq"}}},"output":{"to":{"kind":"DockerImage","name":"image-registry.openshift-image-registry.svc:5000/basic-ocp-demo-development/basic-ocp-demo:latest"},"pushSecret":{"name":"builder-dockercfg-2rskq"}},"resources":{},"postCommit":{},"nodeSelector":null,"triggeredBy":[{"message":"Build configuration change"}]},"status":{"phase":"New","outputDockerImageReference":"image-registry.openshift-image-registry.svc:5000/basic-ocp-demo-development/basic-ocp-demo:latest","config":{"kind":"BuildConfig","namespace":"basic-ocp-demo-development","name":"basic-ocp-demo"},"output":{},"conditions":[{"type":"New","status":"True","lastUpdateTime":"2020-10-05T19:23:13Z","lastTransitionTime":"2020-10-05T19:23:13Z"}]}}
+      - name: LANG
+        value: en_US.utf8
+      - name: SOURCE_REPOSITORY
+        value: https://github.com/FreedomBen/basic-ocp-demo
+      - name: SOURCE_URI
+        value: https://github.com/FreedomBen/basic-ocp-demo
+      - name: SOURCE_REF
+        value: development
+      - name: BUILD_REGISTRIES_CONF_PATH
+        value: /var/run/configs/openshift.io/build-system/registries.conf
+      - name: BUILD_REGISTRIES_DIR_PATH
+        value: /var/run/configs/openshift.io/build-system/registries.d
+      - name: BUILD_SIGNATURE_POLICY_PATH
+        value: /var/run/configs/openshift.io/build-system/policy.json
+      - name: BUILD_STORAGE_CONF_PATH
+        value: /var/run/configs/openshift.io/build-system/storage.conf
+      - name: BUILD_BLOBCACHE_DIR
+        value: /var/cache/blobs
+      - name: HTTP_PROXY
+      - name: HTTPS_PROXY
+      - name: NO_PROXY
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:07387e0f829d78f4d4bb20022a7ffacac10f8e3bc50b78ec3ced904dfd01dae4
+      imagePullPolicy: IfNotPresent
+      name: manage-dockerfile
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: FallbackToLogsOnError
+      volumeMounts:
+      - mountPath: /tmp/build
+        name: buildworkdir
+      - mountPath: /var/run/configs/openshift.io/build-system
+        name: build-system-configs
+        readOnly: true
+      - mountPath: /var/run/configs/openshift.io/certs
+        name: build-ca-bundles
+      - mountPath: /etc/pki/ca-trust/extracted/pem
+        name: build-proxy-ca-bundles
+      - mountPath: /var/cache/blobs
+        name: build-blob-cache
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: builder-token-7f87t
+        readOnly: true
+    nodeName: ip-10-0-139-90.us-east-2.compute.internal
+    nodeSelector:
+      kubernetes.io/os: linux
+    priority: 0
+    restartPolicy: Never
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: builder
+    serviceAccountName: builder
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - hostPath:
+        path: /var/lib/containers/cache
+        type: ""
+      name: buildcachedir
+    - emptyDir: {}
+      name: buildworkdir
+    - name: builder-dockercfg-2rskq-push
+      secret:
+        defaultMode: 384
+        secretName: builder-dockercfg-2rskq
+    - name: builder-dockercfg-2rskq-pull
+      secret:
+        defaultMode: 384
+        secretName: builder-dockercfg-2rskq
+    - configMap:
+        defaultMode: 420
+        name: basic-ocp-demo-1-sys-config
+      name: build-system-configs
+    - configMap:
+        defaultMode: 420
+        items:
+        - key: service-ca.crt
+          path: certs.d/image-registry.openshift-image-registry.svc:5000/ca.crt
+        name: basic-ocp-demo-1-ca
+      name: build-ca-bundles
+    - configMap:
+        defaultMode: 420
+        items:
+        - key: ca-bundle.crt
+          path: tls-ca-bundle.pem
+        name: basic-ocp-demo-1-global-ca
+      name: build-proxy-ca-bundles
+    - emptyDir: {}
+      name: container-storage-root
+    - emptyDir: {}
+      name: build-blob-cache
+    - name: builder-token-7f87t
+      secret:
+        defaultMode: 420
+        secretName: builder-token-7f87t
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2020-10-05T19:23:23Z"
+      reason: PodCompleted
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2020-10-05T19:24:13Z"
+      reason: PodCompleted
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2020-10-05T19:24:13Z"
+      reason: PodCompleted
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2020-10-05T19:23:14Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://ab273ac50fd481b9130582915ceead6032adfb30af2e4cb54f06567ca49ebc9a
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:07387e0f829d78f4d4bb20022a7ffacac10f8e3bc50b78ec3ced904dfd01dae4
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:07387e0f829d78f4d4bb20022a7ffacac10f8e3bc50b78ec3ced904dfd01dae4
+      lastState: {}
+      name: docker-build
+      ready: false
+      restartCount: 0
+      started: false
+      state:
+        terminated:
+          containerID: cri-o://ab273ac50fd481b9130582915ceead6032adfb30af2e4cb54f06567ca49ebc9a
+          exitCode: 0
+          finishedAt: "2020-10-05T19:24:13Z"
+          reason: Completed
+          startedAt: "2020-10-05T19:23:23Z"
+    hostIP: 10.0.139.90
+    initContainerStatuses:
+    - containerID: cri-o://95167edae40b00316bd7c437ee438f9a94d647da3f5e2abb932915d56950f748
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:07387e0f829d78f4d4bb20022a7ffacac10f8e3bc50b78ec3ced904dfd01dae4
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:07387e0f829d78f4d4bb20022a7ffacac10f8e3bc50b78ec3ced904dfd01dae4
+      lastState: {}
+      name: git-clone
+      ready: true
+      restartCount: 0
+      state:
+        terminated:
+          containerID: cri-o://95167edae40b00316bd7c437ee438f9a94d647da3f5e2abb932915d56950f748
+          exitCode: 0
+          finishedAt: "2020-10-05T19:23:21Z"
+          reason: Completed
+          startedAt: "2020-10-05T19:23:20Z"
+    - containerID: cri-o://8dfcc0a414b316762eb42e1ed8bc1a0e4dde040c9afbb90b994b846b2ec9fb7f
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:07387e0f829d78f4d4bb20022a7ffacac10f8e3bc50b78ec3ced904dfd01dae4
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:07387e0f829d78f4d4bb20022a7ffacac10f8e3bc50b78ec3ced904dfd01dae4
+      lastState: {}
+      name: manage-dockerfile
+      ready: true
+      restartCount: 0
+      state:
+        terminated:
+          containerID: cri-o://8dfcc0a414b316762eb42e1ed8bc1a0e4dde040c9afbb90b994b846b2ec9fb7f
+          exitCode: 0
+          finishedAt: "2020-10-05T19:23:22Z"
+          reason: Completed
+          startedAt: "2020-10-05T19:23:22Z"
+    phase: Succeeded
+    podIP: 10.131.0.24
+    podIPs:
+    - ip: 10.131.0.24
+    qosClass: BestEffort
+    startTime: "2020-10-05T19:23:14Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/networks-status: ""
+      openshift.io/deployment-config.name: basic-ocp-demo
+      openshift.io/deployment.name: basic-ocp-demo-1
+      openshift.io/scc: restricted
+    creationTimestamp: "2020-10-05T19:24:13Z"
+    labels:
+      openshift.io/deployer-pod-for.name: basic-ocp-demo-1
+    name: basic-ocp-demo-1-deploy
+    namespace: basic-ocp-demo-development
+    ownerReferences:
+    - apiVersion: v1
+      kind: ReplicationController
+      name: basic-ocp-demo-1
+      uid: a948cb88-5e2e-42a3-a05b-2450fdc5bbd3
+    resourceVersion: "487897"
+    selfLink: /api/v1/namespaces/basic-ocp-demo-development/pods/basic-ocp-demo-1-deploy
+    uid: 97a2d45f-e5a2-4ed9-b37c-b7cd98aeff88
+  spec:
+    activeDeadlineSeconds: 21600
+    containers:
+    - env:
+      - name: OPENSHIFT_DEPLOYMENT_NAME
+        value: basic-ocp-demo-1
+      - name: OPENSHIFT_DEPLOYMENT_NAMESPACE
+        value: basic-ocp-demo-development
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:abbdb36abc302e156477428f7378dba6e48d324b07426d3df77a915334eb3ec0
+      imagePullPolicy: IfNotPresent
+      name: deployment
+      resources: {}
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000630000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: deployer-token-psz92
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: deployer-dockercfg-ggcml
+    nodeName: ip-10-0-139-90.us-east-2.compute.internal
+    priority: 0
+    restartPolicy: Never
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000630000
+      seLinuxOptions:
+        level: s0:c25,c15
+    serviceAccount: deployer
+    serviceAccountName: deployer
+    shareProcessNamespace: false
+    terminationGracePeriodSeconds: 10
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: deployer-token-psz92
+      secret:
+        defaultMode: 420
+        secretName: deployer-token-psz92
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2020-10-05T19:24:13Z"
+      reason: PodCompleted
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2020-10-05T19:24:34Z"
+      reason: PodCompleted
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2020-10-05T19:24:34Z"
+      reason: PodCompleted
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2020-10-05T19:24:13Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://3c34a4eadf92a632b52dae6c557e06e9dc15b71becc098af7362d559b56e3af9
+      image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:abbdb36abc302e156477428f7378dba6e48d324b07426d3df77a915334eb3ec0
+      imageID: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:abbdb36abc302e156477428f7378dba6e48d324b07426d3df77a915334eb3ec0
+      lastState: {}
+      name: deployment
+      ready: false
+      restartCount: 0
+      started: false
+      state:
+        terminated:
+          containerID: cri-o://3c34a4eadf92a632b52dae6c557e06e9dc15b71becc098af7362d559b56e3af9
+          exitCode: 0
+          finishedAt: "2020-10-05T19:24:33Z"
+          reason: Completed
+          startedAt: "2020-10-05T19:24:17Z"
+    hostIP: 10.0.139.90
+    phase: Succeeded
+    podIP: 10.131.0.25
+    podIPs:
+    - ip: 10.131.0.25
+    qosClass: BestEffort
+    startTime: "2020-10-05T19:24:13Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      k8s.v1.cni.cncf.io/networks-status: |-
+        [{
+            "name": "openshift-sdn",
+            "interface": "eth0",
+            "ips": [
+                "10.131.0.26"
+            ],
+            "dns": {},
+            "default-route": [
+                "10.131.0.1"
+            ]
+        }]
+      openshift.io/deployment-config.latest-version: "1"
+      openshift.io/deployment-config.name: basic-ocp-demo
+      openshift.io/deployment.name: basic-ocp-demo-1
+      openshift.io/generated-by: OpenShiftNewApp
+      openshift.io/scc: restricted
+    creationTimestamp: "2020-10-05T19:24:17Z"
+    generateName: basic-ocp-demo-1-
+    labels:
+      deployment: basic-ocp-demo-1
+      deploymentconfig: basic-ocp-demo
+    name: basic-ocp-demo-1-k7bl7
+    namespace: basic-ocp-demo-development
+    ownerReferences:
+    - apiVersion: v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicationController
+      name: basic-ocp-demo-1
+      uid: a948cb88-5e2e-42a3-a05b-2450fdc5bbd3
+    resourceVersion: "487875"
+    selfLink: /api/v1/namespaces/basic-ocp-demo-development/pods/basic-ocp-demo-1-k7bl7
+    uid: eb3e7c71-178f-4c4b-84c6-4f42887eb597
+  spec:
+    containers:
+    - image: image-registry.openshift-image-registry.svc:5000/basic-ocp-demo-development/basic-ocp-demo@sha256:cb65f364cad573e564711490f39bce1032bee6c488cd4f1f3238534104f22143
+      imagePullPolicy: Always
+      name: basic-ocp-demo
+      ports:
+      - containerPort: 4567
+        protocol: TCP
+      resources: {}
+      securityContext:
+        capabilities:
+          drop:
+          - KILL
+          - MKNOD
+          - SETGID
+          - SETUID
+        runAsUser: 1000630000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: default-token-knss4
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    imagePullSecrets:
+    - name: default-dockercfg-zxv5q
+    nodeName: ip-10-0-139-90.us-east-2.compute.internal
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000630000
+      seLinuxOptions:
+        level: s0:c25,c15
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: default-token-knss4
+      secret:
+        defaultMode: 420
+        secretName: default-token-knss4
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2020-10-05T19:24:17Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2020-10-05T19:24:33Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2020-10-05T19:24:33Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2020-10-05T19:24:17Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: cri-o://c006d6637df6ed54a5d25d60410e933bf3f63c41d3b724a643000cecbb2ab6e4
+      image: image-registry.openshift-image-registry.svc:5000/basic-ocp-demo-development/basic-ocp-demo@sha256:cb65f364cad573e564711490f39bce1032bee6c488cd4f1f3238534104f22143
+      imageID: image-registry.openshift-image-registry.svc:5000/basic-ocp-demo-development/basic-ocp-demo@sha256:cb65f364cad573e564711490f39bce1032bee6c488cd4f1f3238534104f22143
+      lastState: {}
+      name: basic-ocp-demo
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2020-10-05T19:24:32Z"
+    hostIP: 10.0.139.90
+    phase: Running
+    podIP: 10.131.0.26
+    podIPs:
+    - ip: 10.131.0.26
+    qosClass: BestEffort
+    startTime: "2020-10-05T19:24:17Z"
+- apiVersion: v1
+  kind: ReplicationController
+  metadata:
+    annotations:
+      openshift.io/deployer-pod.completed-at: 2020-10-05 19:24:33 +0000 UTC
+      openshift.io/deployer-pod.created-at: 2020-10-05 19:24:13 +0000 UTC
+      openshift.io/deployer-pod.name: basic-ocp-demo-1-deploy
+      openshift.io/deployment-config.latest-version: "1"
+      openshift.io/deployment-config.name: basic-ocp-demo
+      openshift.io/deployment.phase: Complete
+      openshift.io/deployment.replicas: "1"
+      openshift.io/deployment.status-reason: config change
+      openshift.io/encoded-deployment-config: |
+        {"kind":"DeploymentConfig","apiVersion":"apps.openshift.io/v1","metadata":{"name":"basic-ocp-demo","namespace":"basic-ocp-demo-development","selfLink":"/apis/apps.openshift.io/v1/namespaces/basic-ocp-demo-development/deploymentconfigs/basic-ocp-demo","uid":"50603c5d-faad-491e-9534-bf1ca7146e77","resourceVersion":"487747","generation":2,"creationTimestamp":"2020-10-05T19:23:13Z","labels":{"app":"basic-ocp-demo","app.kubernetes.io/component":"basic-ocp-demo","app.kubernetes.io/instance":"basic-ocp-demo"},"annotations":{"openshift.io/generated-by":"OpenShiftNewApp"}},"spec":{"strategy":{"type":"Rolling","rollingParams":{"updatePeriodSeconds":1,"intervalSeconds":1,"timeoutSeconds":600,"maxUnavailable":"25%","maxSurge":"25%"},"resources":{},"activeDeadlineSeconds":21600},"triggers":[{"type":"ConfigChange"},{"type":"ImageChange","imageChangeParams":{"automatic":true,"containerNames":["basic-ocp-demo"],"from":{"kind":"ImageStreamTag","namespace":"basic-ocp-demo-development","name":"basic-ocp-demo:latest"},"lastTriggeredImage":"image-registry.openshift-image-registry.svc:5000/basic-ocp-demo-development/basic-ocp-demo@sha256:cb65f364cad573e564711490f39bce1032bee6c488cd4f1f3238534104f22143"}}],"replicas":1,"revisionHistoryLimit":10,"test":false,"selector":{"deploymentconfig":"basic-ocp-demo"},"template":{"metadata":{"creationTimestamp":null,"labels":{"deploymentconfig":"basic-ocp-demo"},"annotations":{"openshift.io/generated-by":"OpenShiftNewApp"}},"spec":{"containers":[{"name":"basic-ocp-demo","image":"image-registry.openshift-image-registry.svc:5000/basic-ocp-demo-development/basic-ocp-demo@sha256:cb65f364cad573e564711490f39bce1032bee6c488cd4f1f3238534104f22143","ports":[{"containerPort":4567,"protocol":"TCP"}],"resources":{},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","imagePullPolicy":"Always"}],"restartPolicy":"Always","terminationGracePeriodSeconds":30,"dnsPolicy":"ClusterFirst","securityContext":{},"schedulerName":"default-scheduler"}}},"status":{"latestVersion":1,"observedGeneration":1,"replicas":0,"updatedReplicas":0,"availableReplicas":0,"unavailableReplicas":0,"details":{"message":"config change","causes":[{"type":"ConfigChange"}]},"conditions":[{"type":"Available","status":"False","lastUpdateTime":"2020-10-05T19:23:13Z","lastTransitionTime":"2020-10-05T19:23:13Z","message":"Deployment config does not have minimum availability."}]}}
+    creationTimestamp: "2020-10-05T19:24:13Z"
+    generation: 2
+    labels:
+      app: basic-ocp-demo
+      app.kubernetes.io/component: basic-ocp-demo
+      app.kubernetes.io/instance: basic-ocp-demo
+      openshift.io/deployment-config.name: basic-ocp-demo
+    name: basic-ocp-demo-1
+    namespace: basic-ocp-demo-development
+    ownerReferences:
+    - apiVersion: apps.openshift.io/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DeploymentConfig
+      name: basic-ocp-demo
+      uid: 50603c5d-faad-491e-9534-bf1ca7146e77
+    resourceVersion: "487886"
+    selfLink: /api/v1/namespaces/basic-ocp-demo-development/replicationcontrollers/basic-ocp-demo-1
+    uid: a948cb88-5e2e-42a3-a05b-2450fdc5bbd3
+  spec:
+    replicas: 1
+    selector:
+      deployment: basic-ocp-demo-1
+      deploymentconfig: basic-ocp-demo
+    template:
+      metadata:
+        annotations:
+          openshift.io/deployment-config.latest-version: "1"
+          openshift.io/deployment-config.name: basic-ocp-demo
+          openshift.io/deployment.name: basic-ocp-demo-1
+          openshift.io/generated-by: OpenShiftNewApp
+        creationTimestamp: null
+        labels:
+          deployment: basic-ocp-demo-1
+          deploymentconfig: basic-ocp-demo
+      spec:
+        containers:
+        - image: image-registry.openshift-image-registry.svc:5000/basic-ocp-demo-development/basic-ocp-demo@sha256:cb65f364cad573e564711490f39bce1032bee6c488cd4f1f3238534104f22143
+          imagePullPolicy: Always
+          name: basic-ocp-demo
+          ports:
+          - containerPort: 4567
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    fullyLabeledReplicas: 1
+    observedGeneration: 2
+    readyReplicas: 1
+    replicas: 1
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: "2020-10-05T19:23:13Z"
+    labels:
+      app: basic-ocp-demo
+      app.kubernetes.io/component: basic-ocp-demo
+      app.kubernetes.io/instance: basic-ocp-demo
+    name: basic-ocp-demo
+    namespace: basic-ocp-demo-development
+    resourceVersion: "487426"
+    selfLink: /api/v1/namespaces/basic-ocp-demo-development/services/basic-ocp-demo
+    uid: ff8d35d3-6a46-4335-91fa-55eac8ffdc95
+  spec:
+    clusterIP: 172.30.44.19
+    ports:
+    - name: 4567-tcp
+      port: 4567
+      protocol: TCP
+      targetPort: 4567
+    selector:
+      deploymentconfig: basic-ocp-demo
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: apps.openshift.io/v1
+  kind: DeploymentConfig
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: "2020-10-05T19:23:13Z"
+    generation: 2
+    labels:
+      app: basic-ocp-demo
+      app.kubernetes.io/component: basic-ocp-demo
+      app.kubernetes.io/instance: basic-ocp-demo
+    name: basic-ocp-demo
+    namespace: basic-ocp-demo-development
+    resourceVersion: "487887"
+    selfLink: /apis/apps.openshift.io/v1/namespaces/basic-ocp-demo-development/deploymentconfigs/basic-ocp-demo
+    uid: 50603c5d-faad-491e-9534-bf1ca7146e77
+  spec:
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      deploymentconfig: basic-ocp-demo
+    strategy:
+      activeDeadlineSeconds: 21600
+      resources: {}
+      rollingParams:
+        intervalSeconds: 1
+        maxSurge: 25%
+        maxUnavailable: 25%
+        timeoutSeconds: 600
+        updatePeriodSeconds: 1
+      type: Rolling
+    template:
+      metadata:
+        annotations:
+          openshift.io/generated-by: OpenShiftNewApp
+        creationTimestamp: null
+        labels:
+          deploymentconfig: basic-ocp-demo
+      spec:
+        containers:
+        - image: image-registry.openshift-image-registry.svc:5000/basic-ocp-demo-development/basic-ocp-demo@sha256:cb65f364cad573e564711490f39bce1032bee6c488cd4f1f3238534104f22143
+          imagePullPolicy: Always
+          name: basic-ocp-demo
+          ports:
+          - containerPort: 4567
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+    test: false
+    triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - basic-ocp-demo
+        from:
+          kind: ImageStreamTag
+          name: basic-ocp-demo:latest
+          namespace: basic-ocp-demo-development
+        lastTriggeredImage: image-registry.openshift-image-registry.svc:5000/basic-ocp-demo-development/basic-ocp-demo@sha256:cb65f364cad573e564711490f39bce1032bee6c488cd4f1f3238534104f22143
+      type: ImageChange
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2020-10-05T19:24:33Z"
+      lastUpdateTime: "2020-10-05T19:24:33Z"
+      message: Deployment config has minimum availability.
+      status: "True"
+      type: Available
+    - lastTransitionTime: "2020-10-05T19:24:17Z"
+      lastUpdateTime: "2020-10-05T19:24:34Z"
+      message: replication controller "basic-ocp-demo-1" successfully rolled out
+      reason: NewReplicationControllerAvailable
+      status: "True"
+      type: Progressing
+    details:
+      causes:
+      - type: ConfigChange
+      message: config change
+    latestVersion: 1
+    observedGeneration: 2
+    readyReplicas: 1
+    replicas: 1
+    unavailableReplicas: 0
+    updatedReplicas: 1
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: "2020-10-05T19:23:13Z"
+    labels:
+      app: basic-ocp-demo
+      app.kubernetes.io/component: basic-ocp-demo
+      app.kubernetes.io/instance: basic-ocp-demo
+    name: basic-ocp-demo
+    namespace: basic-ocp-demo-development
+    resourceVersion: "487436"
+    selfLink: /apis/build.openshift.io/v1/namespaces/basic-ocp-demo-development/buildconfigs/basic-ocp-demo
+    uid: 8ddf2654-e548-4d1a-818a-baeb6b3df7e4
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: basic-ocp-demo:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      git:
+        ref: development
+        uri: https://github.com/FreedomBen/basic-ocp-demo
+      type: Git
+    strategy:
+      dockerStrategy:
+        from:
+          kind: ImageStreamTag
+          name: ruby-25:latest
+      type: Docker
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - github:
+        secret: W2YY_dv8HaWJcu_nHZP-
+      type: GitHub
+    - generic:
+        secret: vAX2RoCj0_QGDdl6g76g
+      type: Generic
+    - type: ConfigChange
+    - imageChange:
+        lastTriggeredImageID: registry.access.redhat.com/ubi8/ruby-25@sha256:255fdb695fa5638a02d504ca04bd21d9c1636592380e857fb0d5010fad31f22e
+      type: ImageChange
+  status:
+    lastVersion: 1
+- apiVersion: build.openshift.io/v1
+  kind: Build
+  metadata:
+    annotations:
+      openshift.io/build-config.name: basic-ocp-demo
+      openshift.io/build.number: "1"
+      openshift.io/build.pod-name: basic-ocp-demo-1-build
+    creationTimestamp: "2020-10-05T19:23:13Z"
+    labels:
+      app: basic-ocp-demo
+      app.kubernetes.io/component: basic-ocp-demo
+      app.kubernetes.io/instance: basic-ocp-demo
+      buildconfig: basic-ocp-demo
+      openshift.io/build-config.name: basic-ocp-demo
+      openshift.io/build.start-policy: Serial
+    name: basic-ocp-demo-1
+    namespace: basic-ocp-demo-development
+    ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      controller: true
+      kind: BuildConfig
+      name: basic-ocp-demo
+      uid: 8ddf2654-e548-4d1a-818a-baeb6b3df7e4
+    resourceVersion: "487758"
+    selfLink: /apis/build.openshift.io/v1/namespaces/basic-ocp-demo-development/builds/basic-ocp-demo-1
+    uid: 8e1d2477-6c3a-418f-9c21-0f5507ae64aa
+  spec:
+    nodeSelector: null
+    output:
+      pushSecret:
+        name: builder-dockercfg-2rskq
+      to:
+        kind: ImageStreamTag
+        name: basic-ocp-demo:latest
+    postCommit: {}
+    resources: {}
+    revision:
+      git:
+        author:
+          email: FreedomBen@users.noreply.github.com
+          name: Benjamin Porter
+        commit: 0dae844e19636a43518fcaff1941af83b2d4000c
+        committer:
+          email: FreedomBen@users.noreply.github.com
+          name: Benjamin Porter
+        message: First update for generic demo app
+      type: Git
+    serviceAccount: builder
+    source:
+      git:
+        ref: development
+        uri: https://github.com/FreedomBen/basic-ocp-demo
+      type: Git
+    strategy:
+      dockerStrategy:
+        from:
+          kind: DockerImage
+          name: registry.access.redhat.com/ubi8/ruby-25@sha256:255fdb695fa5638a02d504ca04bd21d9c1636592380e857fb0d5010fad31f22e
+      type: Docker
+    triggeredBy:
+    - message: Build configuration change
+  status:
+    completionTimestamp: "2020-10-05T19:24:13Z"
+    conditions:
+    - lastTransitionTime: "2020-10-05T19:23:14Z"
+      lastUpdateTime: "2020-10-05T19:23:14Z"
+      status: "False"
+      type: New
+    - lastTransitionTime: "2020-10-05T19:23:21Z"
+      lastUpdateTime: "2020-10-05T19:23:21Z"
+      status: "False"
+      type: Pending
+    - lastTransitionTime: "2020-10-05T19:24:13Z"
+      lastUpdateTime: "2020-10-05T19:24:13Z"
+      status: "False"
+      type: Running
+    - lastTransitionTime: "2020-10-05T19:24:13Z"
+      lastUpdateTime: "2020-10-05T19:24:13Z"
+      status: "True"
+      type: Complete
+    config:
+      kind: BuildConfig
+      name: basic-ocp-demo
+      namespace: basic-ocp-demo-development
+    duration: 59000000000
+    output:
+      to:
+        imageDigest: sha256:cb65f364cad573e564711490f39bce1032bee6c488cd4f1f3238534104f22143
+    outputDockerImageReference: image-registry.openshift-image-registry.svc:5000/basic-ocp-demo-development/basic-ocp-demo:latest
+    phase: Complete
+    stages:
+    - durationMilliseconds: 323
+      name: FetchInputs
+      startTime: "2020-10-05T19:23:21Z"
+      steps:
+      - durationMilliseconds: 323
+        name: FetchGitSource
+        startTime: "2020-10-05T19:23:21Z"
+    - durationMilliseconds: 18642
+      name: PullImages
+      startTime: "2020-10-05T19:23:24Z"
+      steps:
+      - durationMilliseconds: 18642
+        name: PullBaseImage
+        startTime: "2020-10-05T19:23:24Z"
+    - durationMilliseconds: 22723
+      name: Build
+      startTime: "2020-10-05T19:23:42Z"
+      steps:
+      - durationMilliseconds: 22723
+        name: DockerBuild
+        startTime: "2020-10-05T19:23:42Z"
+    - durationMilliseconds: 7358
+      name: PushImage
+      startTime: "2020-10-05T19:24:05Z"
+      steps:
+      - durationMilliseconds: 7358
+        name: PushDockerImage
+        startTime: "2020-10-05T19:24:05Z"
+    startTimestamp: "2020-10-05T19:23:14Z"
+- apiVersion: image.openshift.io/v1
+  kind: ImageStream
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: "2020-10-05T19:23:12Z"
+    generation: 1
+    labels:
+      app: basic-ocp-demo
+      app.kubernetes.io/component: basic-ocp-demo
+      app.kubernetes.io/instance: basic-ocp-demo
+    name: basic-ocp-demo
+    namespace: basic-ocp-demo-development
+    resourceVersion: "487740"
+    selfLink: /apis/image.openshift.io/v1/namespaces/basic-ocp-demo-development/imagestreams/basic-ocp-demo
+    uid: 0059dca4-a114-4f37-8e79-102e7e6411e6
+  spec:
+    lookupPolicy:
+      local: false
+  status:
+    dockerImageRepository: image-registry.openshift-image-registry.svc:5000/basic-ocp-demo-development/basic-ocp-demo
+    tags:
+    - items:
+      - created: "2020-10-05T19:24:12Z"
+        dockerImageReference: image-registry.openshift-image-registry.svc:5000/basic-ocp-demo-development/basic-ocp-demo@sha256:cb65f364cad573e564711490f39bce1032bee6c488cd4f1f3238534104f22143
+        generation: 1
+        image: sha256:cb65f364cad573e564711490f39bce1032bee6c488cd4f1f3238534104f22143
+      tag: latest
+- apiVersion: image.openshift.io/v1
+  kind: ImageStream
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+      openshift.io/image.dockerRepositoryCheck: "2020-10-05T19:23:13Z"
+    creationTimestamp: "2020-10-05T19:23:12Z"
+    generation: 2
+    labels:
+      app: basic-ocp-demo
+      app.kubernetes.io/component: basic-ocp-demo
+      app.kubernetes.io/instance: basic-ocp-demo
+    name: ruby-25
+    namespace: basic-ocp-demo-development
+    resourceVersion: "487435"
+    selfLink: /apis/image.openshift.io/v1/namespaces/basic-ocp-demo-development/imagestreams/ruby-25
+    uid: 068cc155-ce6c-47cc-ae67-1013345db4f3
+  spec:
+    lookupPolicy:
+      local: false
+    tags:
+    - annotations:
+        openshift.io/imported-from: registry.access.redhat.com/ubi8/ruby-25
+      from:
+        kind: DockerImage
+        name: registry.access.redhat.com/ubi8/ruby-25
+      generation: 2
+      importPolicy: {}
+      name: latest
+      referencePolicy:
+        type: Source
+  status:
+    dockerImageRepository: image-registry.openshift-image-registry.svc:5000/basic-ocp-demo-development/ruby-25
+    tags:
+    - items:
+      - created: "2020-10-05T19:23:13Z"
+        dockerImageReference: registry.access.redhat.com/ubi8/ruby-25@sha256:255fdb695fa5638a02d504ca04bd21d9c1636592380e857fb0d5010fad31f22e
+        generation: 2
+        image: sha256:255fdb695fa5638a02d504ca04bd21d9c1636592380e857fb0d5010fad31f22e
+      tag: latest
+- apiVersion: route.openshift.io/v1
+  kind: Route
+  metadata:
+    annotations:
+      openshift.io/host.generated: "true"
+    creationTimestamp: "2020-10-05T19:35:06Z"
+    labels:
+      app: basic-ocp-demo
+      app.kubernetes.io/component: basic-ocp-demo
+      app.kubernetes.io/instance: basic-ocp-demo
+    name: basic-ocp-demo
+    namespace: basic-ocp-demo-development
+    resourceVersion: "490845"
+    selfLink: /apis/route.openshift.io/v1/namespaces/basic-ocp-demo-development/routes/basic-ocp-demo
+    uid: 1a0331c7-863d-41d9-9016-eb3ec991c5b1
+  spec:
+    host: basic-ocp-demo-basic-ocp-demo-development.apps.cluster-b210.b210.sandbox939.opentlc.com
+    port:
+      targetPort: 4567-tcp
+    to:
+      kind: Service
+      name: basic-ocp-demo
+      weight: 100
+    wildcardPolicy: None
+  status:
+    ingress:
+    - conditions:
+      - lastTransitionTime: "2020-10-05T19:35:06Z"
+        status: "True"
+        type: Admitted
+      host: basic-ocp-demo-basic-ocp-demo-development.apps.cluster-b210.b210.sandbox939.opentlc.com
+      routerCanonicalHostname: apps.cluster-b210.b210.sandbox939.opentlc.com
+      routerName: default
+      wildcardPolicy: None
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""
