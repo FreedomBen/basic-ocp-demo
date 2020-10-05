@@ -7,5 +7,5 @@ USER root
 RUN bundle install
 
 USER default
-EXPOSE 43215
+EXPOSE 4567
 CMD /app/app.rb

@@ -2,28 +2,28 @@
 
 require 'sinatra'
 
-set :port, 43215
+set :port, 4567      # Sinatra default
 set :bind, '0.0.0.0'
 
+#ROOT_HTML = <<-EOF
+#  <html lang="en">
+#    <head>
+#      <title>OpenShift Test Application</title>
+#    </head>
+#    <body>
+#      <h1>This p</h1>
+#    </body>
+#  </html>
+#EOF
+
 get '/' do
-  'You requested my root path!  Nice work!'
+  erb :index, :locals => {:name => params[:name]}
 end
 
 get '/healthz' do
-  'I am quite healthy'
-end
-
-get '/freedomben' do
-  'https://github.com/FreedomBen'
-end
-
-post '/hit' do
-  body = request.body.read
-  #unless blacklisted_ip?(body)
-  #  File.open(LOG_FILE, 'a') do |f|
-  #    f.puts(body)
-  #  end
-  #end
-  'ok'
+  {
+    ok: true,
+    datetime: Time.now.getutc
+  }.to_json
 end
 
