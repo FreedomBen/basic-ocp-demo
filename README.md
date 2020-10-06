@@ -13,5 +13,5 @@ oc expose svc basic-ocp-demo
 ```
 
 <p align="center">
-  <img src="https://github.com/FreedomBen/basic-ocp-demo/raw/master/docs/images/example.png" alt="Screenshot" width="450" />
+  <img src="https://github.com/FreedomBen/basic-ocp-demo/blob/master/example.png?raw=true" alt="Screenshot" width="450" />
 </p>
