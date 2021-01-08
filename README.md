@@ -1,5 +1,9 @@
 # Sample Demo app for OpenShift
 
+For an introduction to `oc` and a detailed walk through of deploying this application, see [Introduction to “oc” — the OpenShift Command Line Power Tool](https://freedomben.medium.com/introduction-to-oc-the-openshift-command-line-power-tool-cdcd399b4048?sk=125cc573ea371d91b7eb922cf3193f57).  If medium's paywall block the article for you, use the exact link provided and it will get you around it.  (Often people go to share the article with others and will copy/paste from their browser.  Don't do that because medium will redirect away from the paywall-skipping link above.  If you're sharing the link do it with [this one (same as above)](https://freedomben.medium.com/introduction-to-oc-the-openshift-command-line-power-tool-cdcd399b4048?sk=125cc573ea371d91b7eb922cf3193f57)
+
+For a quick-start, read on!
+
 ## Using s2i / oc new-app
 
 ```bash
