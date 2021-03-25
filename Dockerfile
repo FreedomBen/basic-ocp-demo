@@ -1,4 +1,4 @@
-FROM registry.access.redhat.com/ubi8/ruby-25
+FROM registry.access.redhat.com/ubi8/ruby-27
 
 COPY Gemfile Gemfile.lock /app
 

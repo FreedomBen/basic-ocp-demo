@@ -8,4 +8,4 @@ podman run \
   --interactive \
   --tty \
   --publish 4567:4567 \
-  quay.io/freedomben/basic-ocp-demo:master
+  quay.io/freedomben/basic-ocp-demo:latest
