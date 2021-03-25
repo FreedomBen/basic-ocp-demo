@@ -1,0 +1,128 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: basic-ocp-demo
+  name: basic-ocp-demo
+  namespace: basic-ocp-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: basic-ocp-demo
+  template:
+    metadata:
+      labels:
+        app: basic-ocp-demo
+      namespace: basic-ocp-demo
+    spec:
+      containers:
+      - image: quay.io/freedomben/basic-ocp-demo:latest
+        name: basic-ocp-demo
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 4567
+          protocol: TCP
+        readinessProbe:
+          httpGet:
+            scheme: HTTP
+            path: /healthz
+            port: 4567
+          initialDelaySeconds: 5
+          periodSeconds: 1
+        env:
+        - name: BASIC_OCP_DEMO_ENV
+          value: master
+            #- image: quay.io/freedomben/metals:latest
+            #  name: metals
+            #  imagePullPolicy: Always
+            #  ports:
+            #  - containerPort: 8443
+            #    protocol: TCP
+            #  envFrom:
+            #  - configMapRef:
+            #      name: basic-ocp-demo-certs
+            #  - secretRef:
+            #      name: basic-ocp-demo-server-key
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: basic-ocp-demo
+  name: basic-ocp-demo
+  namespace: basic-ocp-demo
+spec:
+  ports:
+  - name: 4567-tcp
+    port: 4567
+    protocol: TCP
+    targetPort: 4567
+  selector:
+    deployment: basic-ocp-demo
+
+      #---
+      #apiVersion: route.openshift.io/v1
+      #kind: Route
+      #metadata:
+      #  labels:
+      #    app: basic-ocp-demo
+      #  name: basic-ocp-demo
+      #spec:
+      #  port:
+      #    targetPort: 4567-tcp
+      #  to:
+      #    kind: Service
+      #    name: basic-ocp-demo
+      #    weight: 100
+      #  wildcardPolicy: None
+      #  tls:
+      #    termination: edge
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: basic-ocp-demo
+  namespace: basic-ocp-demo
+spec:
+  #tls:
+  #  - hosts:
+  #    - foo.bar.com
+  #    # This assumes tls-secret exists and the SSL
+  #    # certificate contains a CN for foo.bar.com
+  #    secretName: tls-secret
+  defaultBackend:  # Used if no rules below match the request
+    service:
+      name: basic-ocp-demo
+      port:
+        number: 4567
+  rules:
+    - host: ameeliotest.tamx.org
+      http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            # This assumes http-svc exists and routes to healthy endpoints
+            service:
+              name: basic-ocp-demo
+              port:
+                number: 4567
+              #
+              #apiVersion: extensions/v1beta1
+              #kind: Ingress
+              #metadata:
+              #  name: spring-petclinic
+              #spec:
+              #  rules:
+              #  - host: petclinic.192.168.99.100.nip.io
+              #    http:
+              #     paths:
+              #     - path: /
+              #       backend:
+              #        serviceName: spring-petclinic
+              #
+              #
+              #        servicePort: 8080
